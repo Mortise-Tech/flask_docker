@@ -2,25 +2,25 @@ version: '3.7'
 
 services: 
   web: 
-    build: ./app
-    command: flask run 0.0.0.0:5000
+    build: ./web
+    command: gunicorn --bind 0.0.0.0:5000 manage:app
     volumes: 
-      - ./app/:/usr/src/app/
+      - ./web/:/usr/src/app/
     ports: 
       - 5000:5000
     env_file: 
       - ./.env.dev
     depends_on: 
       - db
-
-  db: 
-    image: postgres:12.5-alpine 
-    volumes: 
-      - postgres_data:/var/lib/postgresql/data/
-    environment: 
-      - POSTGRES_USER=project
-      - POSTGRES_PASSWORD=project
-      - POSTGRES_DB=project_dev
   
-volumes: 
-  postgres_data:
+  db:
+    image: postgres:12-alpine
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    environment:
+      - POSTGRES_USER=hello_flask
+      - POSTGRES_PASSWORD=hello_flask
+      - POSTGRES_DB=hello_flask_dev
+
+volumes:
+  postgres_data:   

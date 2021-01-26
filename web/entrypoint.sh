@@ -11,4 +11,6 @@ then
     echo "Sqlite3 started"
 fi
 
+flask run
+
 exec "$@"
